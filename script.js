@@ -1,47 +1,129 @@
-// Form validation function
-function validateField(input) {
-  const errorDiv = input.nextElementSibling; // Select the sibling error div
-  const pattern = /^[a-zA-Z\s]*$/; // Regex pattern for text inputs (only letters)
-
-  // Check for empty input
-  if (input.value.trim() === "") {
-    errorDiv.textContent = "This field cannot be empty.";
-    input.classList.add("error-border"); // Add error class for styling
-    return false;
-  } else {
-    errorDiv.textContent = ""; // Clear previous error message
-    input.classList.remove("error-border"); // Remove error class
-  }
-
-  // Additional validation for phone number
-  if (input.id === "phone" && !/^\d{3}-\d{3}-\d{4}$/.test(input.value)) {
-    errorDiv.textContent = "Phone number must be in format 123-456-7890.";
-    input.classList.add("error-border");
-    return false;
-  }
-
-  // Additional validation for email
-  if (input.id === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
-    errorDiv.textContent = "Please enter a valid email address.";
-    input.classList.add("error-border");
-    return false;
-  }
-
-  // Additional validation for position (just as an example)
-  if (input.id === "position" && !pattern.test(input.value)) {
-    errorDiv.textContent = "Position can only contain letters.";
-    input.classList.add("error-border");
-    return false;
-  }
-
-  return true; // All validations passed
+// Helper function to show error for a specific field
+function showError(element, message) {
+  const errorElement = element.nextElementSibling; // Assuming the error message is next to the input
+  errorElement.textContent = message;
+  errorElement.style.display = "block"; // Show error message
+  element.classList.remove("valid-border"); // Remove valid class
+  element.classList.add("error-border"); // Add error-border class
 }
+
+// Helper function to clear error for a specific field
+function clearError(element) {
+  const errorElement = element.nextElementSibling;
+  errorElement.textContent = "";
+  errorElement.style.display = "none"; // Hide the error message
+  element.classList.remove("error-border"); // Remove error-border class
+  element.classList.add("valid-border"); // Add valid-border class if needed
+}
+
+// Validation function for each input field
+function validateField(input) {
+  const id = input.id;
+  let isValid = true;
+
+  // Check if the field is empty
+  if (input.value.trim() === "") {
+    showError(input, "This field cannot be empty.");
+    return false; // Return false if empty
+  } else {
+    clearError(input);
+  }
+
+  // Additional validations based on the input field type
+  switch (id) {
+    case "name":
+      const namePattern = /^[A-Za-z\s]+$/;
+      if (!namePattern.test(input.value)) {
+        showError(input, "Name must contain only alphabetic characters.");
+        isValid = false;
+      } else {
+        clearError(input);
+      }
+      break;
+
+    case "phone":
+      const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+      if (!phonePattern.test(input.value)) {
+        showError(input, "Phone number must be in the format: 123-456-7890.");
+        isValid = false;
+      } else {
+        clearError(input);
+      }
+      break;
+
+    case "email":
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(input.value)) {
+        showError(input, "Please enter a valid email address.");
+        isValid = false;
+      } else {
+        clearError(input);
+      }
+      break;
+
+    case "dob":
+      if (!input.value) {
+        showError(input, "Please select a valid date of birth.");
+        isValid = false;
+      } else {
+        clearError(input);
+      }
+      break;
+
+    case "position":
+      if (input.value.trim() === "") {
+        showError(input, "Please enter the position.");
+        isValid = false;
+      } else {
+        clearError(input);
+      }
+      break;
+
+    case "department":
+      if (input.value === "") {
+        showError(input, "Please select a department.");
+        isValid = false;
+      } else {
+        clearError(input);
+      }
+      break;
+
+    case "start_date":
+      const today = new Date().toISOString().split("T")[0];
+      if (input.value > today) {
+        showError(input, "Start date cannot be in the future.");
+        isValid = false;
+      } else {
+        clearError(input);
+      }
+      break;
+  }
+
+  // Highlight valid input fields
+  if (isValid) {
+    input.classList.add("valid-border"); // Add valid-border class
+    input.classList.remove("error-border"); // Remove error-border class
+  }
+
+  return isValid;
+}
+
+// Real-time validation: Validate on input (as the user types)
+document.querySelectorAll("input, select").forEach((input) => {
+  // On input event (while typing)
+  input.addEventListener("input", function () {
+    validateField(input); // Validate field in real-time
+  });
+
+  // Also validate on blur (when the input loses focus)
+  input.addEventListener("blur", function () {
+    validateField(input); // Validate field when focus is lost
+  });
+});
 
 // Submit Button: Check all fields on form submission
 const form = document.getElementById("employeeForm");
 const confirmationMessage = document.getElementById("confirmationMessage");
-const modal = document.getElementById("successModal");
-const modalClose = document.getElementById("modalClose");
 
 form.addEventListener("submit", function (event) {
   let allValid = true;
@@ -55,19 +137,19 @@ form.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission if validation fails
   } else {
     event.preventDefault(); // Prevent actual form submission for demo
-    modal.style.display = "block"; // Show modal on successful validation
+    alert("Form successfully validated!"); // Show alert on successful validation
     confirmationMessage.textContent = ""; // Clear previous confirmation message
+    confirmationMessage.style.display = "block"; // Show confirmation message
   }
 });
 
-// Close the modal when the user clicks on <span> (x)
-modalClose.onclick = function () {
-  modal.style.display = "none";
-};
+// Reset function to clear all errors when the page loads
+function resetForm() {
+  document.querySelectorAll("input, select").forEach((input) => {
+    clearError(input);
+    input.classList.remove("valid-border", "error-border"); // Reset class on load
+  });
+}
 
-// Close the modal when the user clicks anywhere outside of the modal
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-};
+// Reset form errors when page loads
+window.addEventListener("load", resetForm);
