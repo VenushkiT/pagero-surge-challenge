@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background: linear-gradient(to bottom, #173b34, #a1d28b); /* Green gradient */
   color: #333;
 }
 
@@ -16,21 +16,55 @@ header {
 nav {
   margin: 10px 0;
   text-align: center;
+  background-color: rgba(23, 59, 52, 0.8); /* Transparent background */
+  padding: 10px 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for the navbar */
+nav:hover {
+  background-color: rgba(23, 59, 52, 1); /* Make navbar more opaque on hover */
 }
 
 nav a {
   margin: 0 15px;
-  color: #333;
+  color: #fff; /* White text */
   text-decoration: none;
   font-weight: bold;
+  padding: 10px 15px; /* Add padding for larger clickable area */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for color */
+}
+
+/* Hover effect for the links */
+nav a:hover {
+  color: #a1d28b; /* Change text color on hover */
+  background-color: #173b34; /* Add background color to links on hover */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Responsive Navigation Bar */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column; /* Stack links vertically on small screens */
+  }
+
+  nav a {
+    margin: 5px 0; /* Add space between links */
+    width: 100%; /* Full width for better touch targets on mobile */
+    text-align: center;
+  }
 }
 
 section {
   margin: 20px;
   padding: 20px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1); /* More transparent white box */
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
 label {
@@ -45,9 +79,9 @@ select {
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
-  border: 2px solid #ccc; /* Default gray border */
+  border: 2px solid #ccc;
   box-sizing: border-box;
-  transition: border-color 0.3s ease; /* Smooth transition */
+  transition: border-color 0.3s ease;
 }
 
 input:focus,
@@ -55,16 +89,14 @@ select:focus {
   border-color: #173b34; /* Change border color on focus */
 }
 
-/* Highlight valid input fields */
 input.valid,
 select.valid {
-  border: 2px solid green; /* Highlight valid fields in green */
+  border: 2px solid green; /* Highlight valid fields */
 }
 
-/* Highlight invalid input fields */
 input.invalid,
 select.invalid {
-  border: 2px solid red; /* Highlight invalid fields in red */
+  border: 2px solid red; /* Highlight invalid fields */
 }
 
 button {
@@ -75,7 +107,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease; /* Smooth transition */
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -97,12 +129,12 @@ footer {
   font-size: 12px;
   margin-top: -15px;
   margin-bottom: 15px;
-  display: none; /* Hidden by default */
+  display: none;
 }
 
 .confirmation {
   color: green;
   font-size: 16px;
   margin-top: 20px;
-  display: none; /* Hidden by default */
+  display: none;
 }
