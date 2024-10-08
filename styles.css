@@ -45,8 +45,26 @@ select {
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc; /* Default gray border */
   box-sizing: border-box;
+  transition: border-color 0.3s ease; /* Smooth transition */
+}
+
+input:focus,
+select:focus {
+  border-color: #173b34; /* Change border color on focus */
+}
+
+/* Highlight valid input fields */
+input.valid,
+select.valid {
+  border: 2px solid green; /* Highlight valid fields in green */
+}
+
+/* Highlight invalid input fields */
+input.invalid,
+select.invalid {
+  border: 2px solid red; /* Highlight invalid fields in red */
 }
 
 button {
@@ -57,6 +75,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 button:hover {
@@ -81,12 +100,9 @@ footer {
   display: none; /* Hidden by default */
 }
 
-input:invalid,
-select:invalid {
-  border: 2px solid red;
-}
-
-input:valid,
-select:valid {
-  border: 2px solid green;
+.confirmation {
+  color: green;
+  font-size: 16px;
+  margin-top: 20px;
+  display: none; /* Hidden by default */
 }

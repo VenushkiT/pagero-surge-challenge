@@ -1,17 +1,18 @@
 // Helper function to show error for a specific field
 function showError(element, message) {
-  const errorElement = element.nextElementSibling;
+  const errorElement = element.nextElementSibling; // Assuming the error message is next to the input
   errorElement.textContent = message;
   errorElement.style.display = "block";
-  element.style.border = "2px solid red";
+  element.classList.remove("valid"); // Remove valid class
+  element.classList.add("invalid"); // Add invalid class
 }
 
 // Helper function to clear error for a specific field
 function clearError(element) {
   const errorElement = element.nextElementSibling;
   errorElement.textContent = "";
-  errorElement.style.display = "none";
-  element.style.border = "2px solid green";
+  errorElement.style.display = "none"; // Hide the error message
+  element.classList.remove("invalid"); // Remove invalid class
 }
 
 // Validation function for each input field
@@ -19,6 +20,15 @@ function validateField(input) {
   const id = input.id;
   let isValid = true;
 
+  // Check if the field is empty
+  if (input.value.trim() === "") {
+    showError(input, "This field cannot be empty.");
+    return false; // Return false if empty
+  } else {
+    clearError(input);
+  }
+
+  // Additional validations based on the input field type
   switch (id) {
     case "name":
       const namePattern = /^[A-Za-z\s]+$/;
@@ -88,20 +98,31 @@ function validateField(input) {
       break;
   }
 
+  // Highlight valid input fields
+  if (isValid) {
+    input.classList.add("valid"); // Add valid class
+    input.classList.remove("invalid"); // Remove invalid class
+  }
+
   return isValid;
 }
 
-// Real-time validation: Validate on blur (when moving out of the field)
+// Real-time validation: Validate on input (as the user types)
 document.querySelectorAll("input, select").forEach((input) => {
-  // On blur event (when leaving the field)
+  // On input event (while typing)
+  input.addEventListener("input", function () {
+    validateField(input); // Validate field in real-time
+  });
+
+  // Also validate on blur (when the input loses focus)
   input.addEventListener("blur", function () {
-    validateField(input);
+    validateField(input); // Validate field when focus is lost
   });
 });
 
 // Submit Button: Check all fields on form submission
-const submitButton = document.querySelector('button[type="submit"]');
 const form = document.getElementById("employeeForm");
+const confirmationMessage = document.getElementById("confirmationMessage");
 
 form.addEventListener("submit", function (event) {
   let allValid = true;
@@ -114,6 +135,20 @@ form.addEventListener("submit", function (event) {
   if (!allValid) {
     event.preventDefault(); // Prevent form submission if validation fails
   } else {
-    alert("Form successfully validated!");
+    event.preventDefault(); // Prevent actual form submission for demo
+    confirmationMessage.textContent = "Form successfully validated!";
+    confirmationMessage.style.display = "block"; // Show confirmation message
   }
 });
+
+// Reset function to clear all errors when the page loads
+function resetForm() {
+  document.querySelectorAll("input, select").forEach((input) => {
+    clearError(input);
+    input.classList.remove("valid", "invalid"); // Reset class on load
+    input.style.border = ""; // Reset to default border color
+  });
+}
+
+// Reset form errors when page loads
+window.addEventListener("load", resetForm);
