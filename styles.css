@@ -2,7 +2,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #173b34, #a1d28b); /* Keeping your original green gradient */
+  background: linear-gradient(to bottom, #173b34, #a1d28b); /* Green gradient */
   color: #333;
 }
 
@@ -15,39 +15,50 @@ header {
   letter-spacing: 1px;
 }
 
+/* Updated Navigation Styles */
 nav {
-  margin: 10px auto; /* Add margin for spacing */
-  padding: 10px 0;
-  background-color: rgba(255, 255, 255, 0.1); /* Change to a lighter background */
+  margin: 10px auto;
+  padding: 15px 0;
+  background: linear-gradient(to right, #173b34, #145c4a); /* Gradient for a cooler effect */
   border-radius: 10px;
   display: flex;
   justify-content: center;
   gap: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
 }
 
 nav a {
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  padding: 10px 25px; /* More padding for a larger clickable area */
-  border-radius: 8px;
-  background-color: rgba(23, 59, 52, 0.8); /* Add a slightly darker background */
-  transition: background 0.3s, color 0.3s, transform 0.3s; /* Added transform for hover effect */
+  padding: 12px 30px; /* Increased padding for a more prominent look */
+  border-radius: 30px;
+  background: rgba(23, 59, 52, 0.9); /* Darker background */
+  position: relative;
 }
 
 nav a:hover {
-  background-color: #145c4a; /* Darken the background on hover */
-  color: #a1d28b; /* Change text color on hover */
-  transform: scale(1.05); /* Slightly enlarge on hover for emphasis */
+  background-color: #a1d28b; /* Lighter green on hover */
+  color: #173b34; /* Dark green text color on hover */
+}
+
+nav a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: -1;
 }
 
 /* Section styles */
 section {
   margin: 40px auto;
   padding: 30px;
-  max-width: 700px; /* Constraining width for better alignment */
-  background-color: rgba(255, 255, 255, 0.9); /* Increased opacity for transparency */
+  max-width: 700px; /* Constraining width */
+  background-color: rgba(255, 255, 255, 0.3); /* Transparency */
   border-radius: 12px;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Softer shadow */
 }
@@ -66,18 +77,17 @@ select {
   border-radius: 8px;
   border: 2px solid #ccc;
   box-sizing: border-box;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 input:focus,
 select:focus {
-  border-color: #173b34; /* Change border color on focus */
-  background-color: #f5f5f5; /* Change background on focus */
+  border-color: #173b34; /* Focus border color */
+  background-color: #f5f5f5; /* Focus background */
 }
 
 /* Error border style */
 .error-border {
-  border-color: red; /* Change border color to red when there's an error */
+  border-color: red; /* Error border color */
 }
 
 button {
@@ -89,15 +99,14 @@ button {
   border-radius: 8px;
   cursor: pointer;
   font-size: 18px;
-  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 button:hover {
-  background-color: #145c4a; /* Darken the button background on hover */
+  background-color: #145c4a; /* Darken button background on hover */
 }
 
 button:active {
-  transform: scale(0.98); /* Subtle press effect */
+  transform: scale(0.98); /* Press effect */
 }
 
 footer {
@@ -105,8 +114,6 @@ footer {
   padding: 15px;
   background-color: #333;
   color: #fff;
-  position: relative;
-  bottom: 0;
   width: 100%;
   margin-top: 40px;
 }
@@ -126,11 +133,7 @@ footer {
   display: none; /* Initially hidden */
 }
 
-/* Fix submit button being hidden */
-section {
-  margin-bottom: 60px; /* Space for footer */
-}
-
+/* Responsive Design */
 @media (max-width: 600px) {
   section {
     padding: 20px; /* Adjust padding for smaller screens */
