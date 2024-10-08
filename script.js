@@ -2,7 +2,7 @@
 function showError(element, message) {
   const errorElement = element.nextElementSibling; // Assuming the error message is next to the input
   errorElement.textContent = message;
-  errorElement.style.display = "block";
+  errorElement.style.display = "block"; // Show error message
   element.classList.remove("valid"); // Remove valid class
   element.classList.add("invalid"); // Add invalid class
 }
@@ -136,7 +136,8 @@ form.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission if validation fails
   } else {
     event.preventDefault(); // Prevent actual form submission for demo
-    confirmationMessage.textContent = "Form successfully validated!";
+    alert("Form successfully validated!"); // Show alert on successful validation
+    confirmationMessage.textContent = ""; // Clear previous confirmation message
     confirmationMessage.style.display = "block"; // Show confirmation message
   }
 });
@@ -146,7 +147,6 @@ function resetForm() {
   document.querySelectorAll("input, select").forEach((input) => {
     clearError(input);
     input.classList.remove("valid", "invalid"); // Reset class on load
-    input.style.border = ""; // Reset to default border color
   });
 }
 
