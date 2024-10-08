@@ -3,8 +3,8 @@ function showError(element, message) {
   const errorElement = element.nextElementSibling; // Assuming the error message is next to the input
   errorElement.textContent = message;
   errorElement.style.display = "block"; // Show error message
-  element.classList.remove("valid"); // Remove valid class
-  element.classList.add("invalid"); // Add invalid class
+  element.classList.remove("valid-border"); // Remove valid class
+  element.classList.add("error-border"); // Add error-border class
 }
 
 // Helper function to clear error for a specific field
@@ -12,7 +12,8 @@ function clearError(element) {
   const errorElement = element.nextElementSibling;
   errorElement.textContent = "";
   errorElement.style.display = "none"; // Hide the error message
-  element.classList.remove("invalid"); // Remove invalid class
+  element.classList.remove("error-border"); // Remove error-border class
+  element.classList.add("valid-border"); // Add valid-border class if needed
 }
 
 // Validation function for each input field
@@ -100,8 +101,8 @@ function validateField(input) {
 
   // Highlight valid input fields
   if (isValid) {
-    input.classList.add("valid"); // Add valid class
-    input.classList.remove("invalid"); // Remove invalid class
+    input.classList.add("valid-border"); // Add valid-border class
+    input.classList.remove("error-border"); // Remove error-border class
   }
 
   return isValid;
@@ -146,7 +147,7 @@ form.addEventListener("submit", function (event) {
 function resetForm() {
   document.querySelectorAll("input, select").forEach((input) => {
     clearError(input);
-    input.classList.remove("valid", "invalid"); // Reset class on load
+    input.classList.remove("valid-border", "error-border"); // Reset class on load
   });
 }
 

@@ -1,8 +1,8 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #173b34, #a1d28b); /* Green gradient */
+  background: linear-gradient(to bottom, #173b34, #a1d28b); /* Keeping your original green gradient */
   color: #333;
 }
 
@@ -11,117 +11,104 @@ header {
   color: #fff;
   padding: 20px 0;
   text-align: center;
+  font-size: 24px;
+  letter-spacing: 1px;
 }
 
 nav {
-  margin: 10px 0;
-  text-align: center;
-  background-color: rgba(23, 59, 52, 0.8); /* Transparent background */
+  margin: 10px auto; /* Add margin for spacing */
   padding: 10px 0;
+  background-color: rgba(255, 255, 255, 0.1); /* Change to a lighter background */
   border-radius: 10px;
   display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  transition: background-color 0.3s ease; /* Smooth transition */
-}
-
-/* Hover effect for the navbar */
-nav:hover {
-  background-color: rgba(23, 59, 52, 1); /* Make navbar more opaque on hover */
+  justify-content: center;
+  gap: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
 
 nav a {
-  margin: 0 15px;
-  color: #fff; /* White text */
+  color: #fff;
   text-decoration: none;
-  font-weight: bold;
-  padding: 10px 15px; /* Add padding for larger clickable area */
-  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for color */
+  font-weight: 600;
+  padding: 10px 25px; /* More padding for a larger clickable area */
+  border-radius: 8px;
+  background-color: rgba(23, 59, 52, 0.8); /* Add a slightly darker background */
+  transition: background 0.3s, color 0.3s, transform 0.3s; /* Added transform for hover effect */
 }
 
-/* Hover effect for the links */
 nav a:hover {
+  background-color: #145c4a; /* Darken the background on hover */
   color: #a1d28b; /* Change text color on hover */
-  background-color: #173b34; /* Add background color to links on hover */
-  border-radius: 5px; /* Rounded corners */
+  transform: scale(1.05); /* Slightly enlarge on hover for emphasis */
 }
 
-/* Responsive Navigation Bar */
-@media (max-width: 600px) {
-  nav {
-    flex-direction: column; /* Stack links vertically on small screens */
-  }
-
-  nav a {
-    margin: 5px 0; /* Add space between links */
-    width: 100%; /* Full width for better touch targets on mobile */
-    text-align: center;
-  }
-}
-
+/* Section styles */
 section {
-  margin: 20px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1); /* More transparent white box */
-  border-radius: 5px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  margin: 40px auto;
+  padding: 30px;
+  max-width: 700px; /* Constraining width for better alignment */
+  background-color: rgba(255, 255, 255, 0.9); /* Increased opacity for transparency */
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Softer shadow */
 }
 
 label {
-  display: block;
-  margin-bottom: 8px;
   font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 input,
 select {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 25px;
+  border-radius: 8px;
   border: 2px solid #ccc;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 input:focus,
 select:focus {
   border-color: #173b34; /* Change border color on focus */
+  background-color: #f5f5f5; /* Change background on focus */
 }
 
-input.valid,
-select.valid {
-  border: 2px solid green; /* Highlight valid fields */
-}
-
-input.invalid,
-select.invalid {
-  border: 2px solid red; /* Highlight invalid fields */
+/* Error border style */
+.error-border {
+  border-color: red; /* Change border color to red when there's an error */
 }
 
 button {
-  padding: 10px 15px;
+  width: 100%;
+  padding: 15px;
   background-color: #173b34;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 button:hover {
-  background-color: #145c4a;
+  background-color: #145c4a; /* Darken the button background on hover */
+}
+
+button:active {
+  transform: scale(0.98); /* Subtle press effect */
 }
 
 footer {
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   background-color: #333;
   color: #fff;
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
+  margin-top: 40px;
 }
 
 .error {
@@ -129,12 +116,36 @@ footer {
   font-size: 12px;
   margin-top: -15px;
   margin-bottom: 15px;
-  display: none;
+  display: none; /* Initially hidden */
 }
 
 .confirmation {
   color: green;
   font-size: 16px;
   margin-top: 20px;
-  display: none;
+  display: none; /* Initially hidden */
+}
+
+/* Fix submit button being hidden */
+section {
+  margin-bottom: 60px; /* Space for footer */
+}
+
+@media (max-width: 600px) {
+  section {
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+
+  nav {
+    flex-direction: column; /* Stack nav items vertically */
+    gap: 10px; /* Reduced gap for mobile */
+  }
+
+  button {
+    width: 100%; /* Ensure button takes full width */
+  }
+
+  footer {
+    font-size: 14px; /* Smaller font size for footer */
+  }
 }
