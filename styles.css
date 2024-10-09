@@ -131,6 +131,60 @@ footer {
   display: none; /* Initially hidden */
 }
 
+/* Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay with increased opacity */
+  backdrop-filter: blur(5px); /* Blur the background for a modern touch */
+  transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+.modal-content {
+  background-color: #fff; /* Background color for the modal content */
+  margin: 10% auto; /* Center the modal vertically and horizontally */
+  padding: 30px; /* Increased padding for a more spacious look */
+  border: 1px solid #173b34; /* Optional border */
+  width: 90%; /* Full width with some margin on smaller screens */
+  max-width: 500px; /* Limit the maximum width for larger screens */
+  border-radius: 15px; /* More rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  text-align: center; /* Center the text */
+  animation: fadeIn 0.3s; /* Fade-in animation */
+}
+
+/* Close button styles */
+.close-button {
+  color: #555; /* Softer color for the close button */
+  float: right;
+  font-size: 24px; /* Slightly smaller font size */
+  font-weight: bold;
+  transition: color 0.3s; /* Smooth color transition */
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #ff0000; /* Change to a bright red on hover */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Animation keyframes for fade-in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start invisible */
+  }
+  to {
+    opacity: 1; /* End fully visible */
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
   section {
