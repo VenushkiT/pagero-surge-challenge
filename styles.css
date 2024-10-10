@@ -2,7 +2,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom right, #0a3d34, #2f6f54, #93c9a3); /* Updated green gradient */
+  background: linear-gradient(to bottom right, #0a3d34, #2f6f54, #93c9a3);
   color: #333;
 }
 
@@ -54,17 +54,17 @@ header {
 
 /* When Sidebar is Active (open) */
 .sidebar.open {
-  width: 250px; /* Full width when open */
+  width: 250px;
 }
 
 /* Section styles */
 section {
   margin: 40px auto;
   padding: 30px;
-  max-width: 700px; /* Constraining width */
-  background-color: rgba(255, 255, 255, 0.3); /* Transparency */
+  max-width: 700px;
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 label {
@@ -85,13 +85,13 @@ select {
 
 input:focus,
 select:focus {
-  border-color: #173b34; /* Focus border color */
-  background-color: #f5f5f5; /* Focus background */
+  border-color: #173b34;
+  background-color: #f5f5f5;
 }
 
 /* Error border style */
 .error-border {
-  border-color: red; /* Error border color */
+  border-color: red;
 }
 
 button {
@@ -106,11 +106,11 @@ button {
 }
 
 button:hover {
-  background-color: #145c4a; /* Darken button background on hover */
+  background-color: #145c4a;
 }
 
 button:active {
-  transform: scale(0.98); /* Press effect */
+  transform: scale(0.98);
 }
 
 footer {
@@ -123,65 +123,65 @@ footer {
 }
 
 .error {
-  color: #d50000; /* Darker red for better contrast */
-  font-size: 14px; /* Increased font size */
-  margin-top: 0px; /* Set margin to 0 to bring it closer to the input */
-  margin-bottom: 10px; /* Reduced bottom margin */
-  display: block; /* Ensure it's visible */
-  padding: 5px; /* Keep padding for spacing */
-  background-color: rgba(255, 77, 77, 0.2); /* Light red background for contrast */
-  border-left: 4px solid #d50000; /* Emphasizing border on the left */
-  border-radius: 3px; /* Slightly rounded corners for a modern look */
-  font-weight: bold; /* Make font bold for better visibility */
+  color: #d50000;
+  font-size: 14px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  display: block;
+  padding: 5px;
+  background-color: rgba(251, 251, 251, 0.2);
+  border-left: 4px solid #d50000;
+  border-radius: 3px;
+  font-weight: bold;
 }
 
 .confirmation {
   color: green;
   font-size: 16px;
   margin-top: 20px;
-  display: none; /* Initially hidden */
+  display: none;
 }
 
 /* Modal Styles */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1000;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay with increased opacity */
-  backdrop-filter: blur(5px); /* Blur the background for a modern touch */
-  transition: opacity 0.3s ease; /* Smooth fade-in effect */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  transition: opacity 0.3s ease;
 }
 
 .modal-content {
-  background-color: #fff; /* Background color for the modal content */
-  margin: 10% auto; /* Center the modal vertically and horizontally */
-  padding: 30px; /* Increased padding for a more spacious look */
-  border: 1px solid #173b34; /* Optional border */
-  width: 90%; /* Full width with some margin on smaller screens */
-  max-width: 500px; /* Limit the maximum width for larger screens */
-  border-radius: 15px; /* More rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  text-align: center; /* Center the text */
-  animation: fadeIn 0.3s; /* Fade-in animation */
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border: 1px solid #173b34;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s;
 }
 
 /* Close button styles */
 .close-button {
-  color: #555; /* Softer color for the close button */
+  color: #555;
   float: right;
-  font-size: 24px; /* Slightly smaller font size */
+  font-size: 24px;
   font-weight: bold;
-  transition: color 0.3s; /* Smooth color transition */
+  transition: color 0.3s;
 }
 
 .close-button:hover,
 .close-button:focus {
-  color: #ff0000; /* Change to a bright red on hover */
+  color: #ff0000;
   text-decoration: none;
   cursor: pointer;
 }
@@ -189,25 +189,25 @@ footer {
 /* Animation keyframes for fade-in effect */
 @keyframes fadeIn {
   from {
-    opacity: 0; /* Start invisible */
+    opacity: 0;
   }
   to {
-    opacity: 1; /* End fully visible */
+    opacity: 1;
   }
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
   section {
-    padding: 20px; /* Adjust padding for smaller screens */
+    padding: 20px;
   }
 
   nav {
-    flex-direction: column; /* Stack nav items vertically */
-    gap: 10px; /* Reduced gap for mobile */
+    flex-direction: column;
+    gap: 10px;
   }
 
   button {
-    width: 100%; /* Ensure button takes full width */
+    width: 100%;
   }
 }
