@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Helper function to show error for a specific field
+  // --- Helper Functions ---
+
+  // Show error for a specific field
   function showError(element, message) {
     const errorElement = element.nextElementSibling;
     errorElement.textContent = message;
@@ -8,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     element.classList.add("error-border");
   }
 
-  // Helper function to clear error for a specific field
+  // Clear error for a specific field
   function clearError(element) {
     const errorElement = element.nextElementSibling;
     errorElement.textContent = "";
@@ -17,12 +19,14 @@ document.addEventListener("DOMContentLoaded", function () {
     element.classList.add("valid-border");
   }
 
-  // Validation function for each input field
+  // --- Validation Functions ---
+
+  // Validate a specific input field
   function validateField(input) {
     const id = input.id;
     let isValid = true;
 
-    // Check if the field is empty and clear the error immediately
+    // Check if field is empty
     if (input.value.trim() === "") {
       clearError(input);
       return false;
@@ -30,15 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
       clearError(input);
     }
 
-    // Additional validations based on the input field type
+    // Perform field-specific validation
     switch (id) {
       case "name":
         const namePattern = /^[A-Za-z\s]+$/;
         if (!namePattern.test(input.value)) {
           showError(input, "Name must contain only alphabetic characters.");
           isValid = false;
-        } else {
-          clearError(input);
         }
         break;
 
@@ -47,8 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!phonePattern.test(input.value)) {
           showError(input, "Phone number must be in the format: 123-456-7890.");
           isValid = false;
-        } else {
-          clearError(input);
         }
         break;
 
@@ -57,8 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!emailPattern.test(input.value)) {
           showError(input, "Please enter a valid email address.");
           isValid = false;
-        } else {
-          clearError(input);
         }
         break;
 
@@ -66,8 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!input.value) {
           showError(input, "Please select a valid date of birth.");
           isValid = false;
-        } else {
-          clearError(input);
         }
         break;
 
@@ -75,8 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (input.value.trim() === "") {
           showError(input, "Please enter the position.");
           isValid = false;
-        } else {
-          clearError(input);
         }
         break;
 
@@ -84,8 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (input.value === "") {
           showError(input, "Please select a department.");
           isValid = false;
-        } else {
-          clearError(input);
         }
         break;
 
@@ -94,13 +86,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (input.value > today) {
           showError(input, "Start date cannot be in the future.");
           isValid = false;
-        } else {
-          clearError(input);
         }
         break;
     }
 
-    // Highlight valid input fields
+    // Apply valid-border class if input is valid
     if (isValid) {
       input.classList.add("valid-border");
       input.classList.remove("error-border");
@@ -109,24 +99,24 @@ document.addEventListener("DOMContentLoaded", function () {
     return isValid;
   }
 
-  // Real-time validation: Validate on input (as the user types)
-  document.querySelectorAll("input, select").forEach((input) => {
-    input.addEventListener("input", function () {
-      validateField(input);
-    });
+  // --- Real-Time Validation ---
 
-    // Also validate on blur (when the input loses focus)
-    input.addEventListener("blur", function () {
-      validateField(input);
-    });
+  // Validate on input (real-time) and on blur (when losing focus)
+  document.querySelectorAll("input, select").forEach((input) => {
+    input.addEventListener("input", () => validateField(input));
+    input.addEventListener("blur", () => validateField(input));
   });
+
+  // --- Sidebar Toggle ---
 
   document.getElementById("hamburger").addEventListener("click", function () {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("open");
   });
 
-  // Function to show the modal
+  // --- Modal Functions ---
+
+  // Show modal with a message
   function showModal(message) {
     const modal = document.getElementById("confirmationModal");
     const modalContent = modal.querySelector("p");
@@ -134,43 +124,13 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "block";
   }
 
-  // Function to hide the modal
+  // Hide modal
   function closeModal() {
     const modal = document.getElementById("confirmationModal");
     modal.style.display = "none";
   }
 
-  // Submit Button: Check all fields on form submission
-  const form = document.getElementById("employeeForm");
-
-  form.addEventListener("submit", function (event) {
-    let allValid = true;
-    document.querySelectorAll("input, select").forEach((input) => {
-      if (!validateField(input)) {
-        allValid = false;
-      }
-    });
-
-    if (!allValid) {
-      event.preventDefault();
-    } else {
-      event.preventDefault();
-      showModal("Form successfully validated!");
-    }
-  });
-
-  // Reset function to clear all errors when the page loads
-  function resetForm() {
-    document.querySelectorAll("input, select").forEach((input) => {
-      clearError(input);
-      input.classList.remove("valid-border", "error-border");
-    });
-  }
-
-  // Reset form errors when page loads
-  window.addEventListener("load", resetForm);
-
-  // Close modal event listener
+  // Close modal on close button or outside click
   document.querySelector(".close-button").addEventListener("click", closeModal);
   window.addEventListener("click", function (event) {
     const modal = document.getElementById("confirmationModal");
@@ -178,4 +138,39 @@ document.addEventListener("DOMContentLoaded", function () {
       closeModal();
     }
   });
+
+  // --- Form Submission ---
+
+  const form = document.getElementById("employeeForm");
+
+  // Validate all fields on form submission
+  form.addEventListener("submit", function (event) {
+    let allValid = true;
+
+    document.querySelectorAll("input, select").forEach((input) => {
+      if (!validateField(input)) {
+        allValid = false;
+      }
+    });
+
+    // Prevent form submission if there are validation errors
+    if (!allValid) {
+      event.preventDefault();
+    } else {
+      event.preventDefault(); // Prevent default form submission for demo
+      showModal("Form successfully validated!");
+    }
+  });
+
+  // --- Reset Form on Load ---
+
+  function resetForm() {
+    document.querySelectorAll("input, select").forEach((input) => {
+      clearError(input);
+      input.classList.remove("valid-border", "error-border");
+    });
+  }
+
+  // Reset form when page loads
+  window.addEventListener("load", resetForm);
 });
