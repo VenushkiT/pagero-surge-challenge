@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // --- Sidebar Toggle ---
+
+  document.getElementById("hamburger").addEventListener("click", function () {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("open");
+  });
   // --- Helper Functions ---
 
   // Show error for a specific field
@@ -105,13 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("input, select").forEach((input) => {
     input.addEventListener("input", () => validateField(input));
     input.addEventListener("blur", () => validateField(input));
-  });
-
-  // --- Sidebar Toggle ---
-
-  document.getElementById("hamburger").addEventListener("click", function () {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("open");
   });
 
   // --- Modal Functions ---
