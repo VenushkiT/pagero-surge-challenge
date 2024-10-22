@@ -1,11 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // --- Sidebar Toggle ---
+  // Sidebar Toggle
   document.getElementById("hamburger").addEventListener("click", function () {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("open");
   });
 
-  // --- Helper Functions ---
+  // Define the showSection function
+  window.showSection = function (sectionId) {
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => {
+      section.style.display = "none";
+    });
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      targetSection.style.display = "block";
+    }
+  };
+  // Helper Functions
 
   // Show error for a specific field
   function showError(element, message) {
@@ -25,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     element.classList.add("valid-border");
   }
 
-  // --- Validation Functions ---
+  //  Validation Functions
 
   // Validate a specific input field
   function validateField(input) {
@@ -105,14 +116,14 @@ document.addEventListener("DOMContentLoaded", function () {
     return isValid;
   }
 
-  // --- Real-Time Validation ---
+  //  Real-Time Validation
 
   document.querySelectorAll("input, select").forEach((input) => {
     input.addEventListener("input", () => validateField(input));
     input.addEventListener("blur", () => validateField(input));
   });
 
-  // --- Modal Functions ---
+  //  Modal Functions
   function showModal(message) {
     const modal = document.getElementById("confirmationModal");
     const modalContent = modal.querySelector("p");
@@ -133,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // --- Form Submission ---
+  //  Form Submission
   const form = document.getElementById("employeeForm");
 
   form.addEventListener("submit", function (event) {
@@ -183,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // --- Reset Form on Load ---
+  //  Reset Form on Load
   function resetForm() {
     document.querySelectorAll("input, select").forEach((input) => {
       clearError(input);
@@ -193,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("load", resetForm);
 
-  // --- Section Switching ---
+  //  Section Switching
   function showSection(sectionId) {
     document.getElementById("main-content").style.display = "none";
     document.getElementById("details-section").style.display = "block";
