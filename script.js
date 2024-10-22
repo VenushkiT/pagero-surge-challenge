@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   // --- Sidebar Toggle ---
-
   document.getElementById("hamburger").addEventListener("click", function () {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("open");
   });
+
   // --- Helper Functions ---
 
   // Show error for a specific field
@@ -107,15 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // --- Real-Time Validation ---
 
-  // Validate on input (real-time) and on blur (when losing focus)
   document.querySelectorAll("input, select").forEach((input) => {
     input.addEventListener("input", () => validateField(input));
     input.addEventListener("blur", () => validateField(input));
   });
 
   // --- Modal Functions ---
-
-  // Show modal with a message
   function showModal(message) {
     const modal = document.getElementById("confirmationModal");
     const modalContent = modal.querySelector("p");
@@ -123,13 +120,11 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "block";
   }
 
-  // Hide modal
   function closeModal() {
     const modal = document.getElementById("confirmationModal");
     modal.style.display = "none";
   }
 
-  // Close modal on close button or outside click
   document.querySelector(".close-button").addEventListener("click", closeModal);
   window.addEventListener("click", function (event) {
     const modal = document.getElementById("confirmationModal");
@@ -139,10 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // --- Form Submission ---
-
   const form = document.getElementById("employeeForm");
 
-  // Validate all fields on form submission
   form.addEventListener("submit", function (event) {
     let allValid = true;
 
@@ -158,11 +151,39 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       event.preventDefault(); // Prevent default form submission for demo
       showModal("Form successfully validated!");
+
+      // Collect form data
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
+      const dob = document.getElementById("dob").value;
+      const position = document.getElementById("position").value;
+      const department = document.getElementById("department").value;
+      const startDate = document.getElementById("start_date").value;
+
+      // Insert data into the table
+      const table = document.getElementById("employeeTable").querySelector("tbody");
+      const newRow = table.insertRow();
+      newRow.insertCell(0).innerText = name;
+      newRow.insertCell(1).innerText = phone;
+      newRow.insertCell(2).innerText = email;
+      newRow.insertCell(3).innerText = dob;
+      newRow.insertCell(4).innerText = position;
+      newRow.insertCell(5).innerText = department;
+      newRow.insertCell(6).innerText = startDate;
+
+      // Show the details section
+      showSection("details-section");
+
+      // Optionally reset form after submission
+      form.reset();
+
+      // Show confirmation modal
+      showModal("Form submitted successfully!");
     }
   });
 
   // --- Reset Form on Load ---
-
   function resetForm() {
     document.querySelectorAll("input, select").forEach((input) => {
       clearError(input);
@@ -170,6 +191,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Reset form when page loads
   window.addEventListener("load", resetForm);
+
+  // --- Section Switching ---
+  function showSection(sectionId) {
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById("details-section").style.display = "block";
+  }
 });
