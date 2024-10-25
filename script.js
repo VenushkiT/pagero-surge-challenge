@@ -16,9 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
       targetSection.style.display = "block";
     }
   };
-  // Helper Functions
 
-  // Show error for a specific field
+  // Helper Functions
   function showError(element, message) {
     const errorElement = element.nextElementSibling;
     errorElement.textContent = message;
@@ -27,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
     element.classList.add("error-border");
   }
 
-  // Clear error for a specific field
   function clearError(element) {
     const errorElement = element.nextElementSibling;
     errorElement.textContent = "";
@@ -36,14 +34,11 @@ document.addEventListener("DOMContentLoaded", function () {
     element.classList.add("valid-border");
   }
 
-  //  Validation Functions
-
-  // Validate a specific input field
+  // Validation Functions
   function validateField(input) {
     const id = input.id;
     let isValid = true;
 
-    // Check if field is empty
     if (input.value.trim() === "") {
       clearError(input);
       return false;
@@ -51,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
       clearError(input);
     }
 
-    // Perform field-specific validation
     switch (id) {
       case "name":
         const namePattern = /^[A-Za-z\s]+$/;
@@ -107,7 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
         break;
     }
 
-    // Apply valid-border class if input is valid
     if (isValid) {
       input.classList.add("valid-border");
       input.classList.remove("error-border");
@@ -116,14 +109,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return isValid;
   }
 
-  //  Real-Time Validation
-
+  // Real-Time Validation
   document.querySelectorAll("input, select").forEach((input) => {
     input.addEventListener("input", () => validateField(input));
     input.addEventListener("blur", () => validateField(input));
   });
 
-  //  Modal Functions
+  // Modal Functions
   function showModal(message) {
     const modal = document.getElementById("confirmationModal");
     const modalContent = modal.querySelector("p");
@@ -144,7 +136,46 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  //  Form Submission
+  // Modal for Deleting Confirmation
+  const deleteModal = document.getElementById("deleteModal");
+  const confirmDeleteButton = document.getElementById("confirmDelete");
+  const cancelDeleteButton = document.getElementById("cancelDelete");
+  let currentRow;
+
+  // Function to show the delete confirmation modal
+  function showDeleteModal(row) {
+    currentRow = row;
+    deleteModal.style.display = "block";
+  }
+
+  // Confirm delete action
+  confirmDeleteButton.onclick = function () {
+    if (currentRow) {
+      const tableBody = document.getElementById("employeeTable").querySelector("tbody");
+      tableBody.deleteRow(currentRow.rowIndex - 1);
+      showModal("Employee deleted successfully.");
+    }
+    deleteModal.style.display = "none";
+  };
+
+  // Cancel delete action
+  cancelDeleteButton.onclick = function () {
+    deleteModal.style.display = "none";
+  };
+
+  // Close modal when clicking the close button
+  document.getElementById("closeDeleteModal").onclick = function () {
+    deleteModal.style.display = "none";
+  };
+
+  // Close modal when clicking outside the modal
+  window.onclick = function (event) {
+    if (event.target === deleteModal) {
+      deleteModal.style.display = "none";
+    }
+  };
+
+  // Form Submission
   const form = document.getElementById("employeeForm");
 
   form.addEventListener("submit", function (event) {
@@ -160,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!allValid) {
       event.preventDefault();
     } else {
-      event.preventDefault(); // Prevent default form submission for demo
+      event.preventDefault();
       showModal("Form successfully validated!");
 
       // Collect form data
@@ -194,7 +225,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const deleteButton = document.createElement("button");
       deleteButton.className = "delete-button";
       deleteButton.textContent = "🗑️";
+      deleteButton.onclick = function () {
+        showDeleteModal(newRow);
+      };
       actionsCell.appendChild(deleteButton);
+
       // Show the details section
       showSection("details-section");
 
@@ -206,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  //  Reset Form on Load
+  // Reset Form on Load
   function resetForm() {
     document.querySelectorAll("input, select").forEach((input) => {
       clearError(input);
@@ -216,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("load", resetForm);
 
-  //  Section Switching
+  // Section Switching
   function showSection(sectionId) {
     document.getElementById("main-content").style.display = "none";
     document.getElementById("details-section").style.display = "block";
