@@ -182,7 +182,19 @@ document.addEventListener("DOMContentLoaded", function () {
       newRow.insertCell(4).innerText = position;
       newRow.insertCell(5).innerText = department;
       newRow.insertCell(6).innerText = startDate;
+      const actionsCell = newRow.insertCell(7);
 
+      // Create Edit Button
+      const editButton = document.createElement("button");
+      editButton.className = "edit-button";
+      editButton.textContent = "✏️";
+      actionsCell.appendChild(editButton);
+
+      // Create Delete Button
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-button";
+      deleteButton.textContent = "🗑️";
+      actionsCell.appendChild(deleteButton);
       // Show the details section
       showSection("details-section");
 

@@ -203,6 +203,10 @@ select:focus {
 }
 
 @media (max-width: 600px) {
+  section {
+    padding: 20px;
+  }
+
   #details-section {
     overflow-x: auto;
   }
@@ -245,6 +249,38 @@ button:hover {
 
 button:active {
   transform: scale(0.98);
+}
+
+/* Edit and Delete Button Styles */
+.edit-button,
+.delete-button {
+  font-size: 12px; /* Smaller font size */
+  padding: 2px 5px; /* Reduced padding for smaller buttons */
+  border: none; /* Remove border */
+  border-radius: 3px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer on hover */
+  display: inline-block; /* Align buttons in one line */
+}
+
+/* Edit Button Style */
+.edit-button {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+}
+
+/* Delete Button Style */
+.delete-button {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+}
+
+/* Hover Effects */
+.edit-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.delete-button:hover {
+  background-color: #e53935; /* Darker red on hover */
 }
 
 /* Footer Styles */
@@ -312,18 +348,30 @@ footer {
   }
 }
 
-/* Additional Media Queries */
-@media (max-width: 600px) {
-  section {
-    padding: 20px;
-  }
+/* Confirmation Button Styles */
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  nav {
-    flex-direction: column;
-    gap: 10px;
-  }
+.cancel-button {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  button {
-    width: 100%;
-  }
+/* Hover Effects for Confirmation Buttons */
+.confirm-button:hover {
+  background-color: #45a049;
+}
+
+.cancel-button:hover {
+  background-color: #e53935;
 }
