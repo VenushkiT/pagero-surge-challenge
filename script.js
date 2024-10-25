@@ -208,6 +208,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const editButton = document.createElement("button");
       editButton.className = "edit-button";
       editButton.textContent = "✏️";
+      editButton.onclick = function () {
+        editRow(newRow);
+      };
       actionsCell.appendChild(editButton);
 
       // Create Delete Button
@@ -251,4 +254,89 @@ document.addEventListener("DOMContentLoaded", function () {
       targetSection.style.display = "block";
     }
   };
+
+  // Edit Functionality
+  function showEditConfirmationModal(callback) {
+    const editModal = document.getElementById("editConfirmationModal");
+    editModal.style.display = "block";
+
+    document.getElementById("confirmEdit").onclick = function () {
+      editModal.style.display = "none";
+      callback(true); // Proceed with saving changes
+    };
+
+    document.getElementById("cancelEdit").onclick = function () {
+      editModal.style.display = "none";
+      callback(false); // Cancel the save action
+    };
+    document.getElementById("closeEditModal").onclick = function () {
+      deleteModal.style.display = "none";
+    };
+  }
+
+  function editRow(row) {
+    const cells = row.cells;
+    const originalData = Array.from(cells).map((cell) => cell.innerText);
+
+    // Replace cells with input fields
+    for (let i = 0; i < cells.length - 1; i++) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = originalData[i];
+      cells[i].innerHTML = ""; // Clear the cell
+      cells[i].appendChild(input); // Append the input field
+    }
+
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+    saveButton.className = "save-button";
+    saveButton.onclick = () => {
+      showEditConfirmationModal((confirmSave) => {
+        if (confirmSave) {
+          // Save changes to cells
+          for (let i = 0; i < cells.length - 1; i++) {
+            cells[i].innerText = cells[i].querySelector("input").value; // Update cell values
+          }
+          showModal("Saved successfully.");
+          resetActionButtons(cells); // Reset action buttons after saving
+        } else {
+          // Revert changes if not saving
+          for (let i = 0; i < cells.length - 1; i++) {
+            cells[i].innerText = originalData[i]; // Restore original data
+          }
+          resetActionButtons(cells); // Reset action buttons
+        }
+      });
+    };
+
+    // Clear previous action buttons and append save button
+    const actionsCell = cells[cells.length - 1];
+    actionsCell.innerHTML = ""; // Clear actions cell
+    actionsCell.appendChild(saveButton); // Append save button
+  }
+
+  // Reset action buttons to original state
+  function resetActionButtons(cells) {
+    const actionsCell = cells[cells.length - 1];
+    actionsCell.innerHTML = ""; // Clear actions cell
+
+    // Create Edit Button
+    const editButton = document.createElement("button");
+    editButton.className = "edit-button";
+    editButton.textContent = "✏️"; // Edit icon
+    editButton.onclick = function () {
+      editRow(cells); // Reopen edit row function
+    };
+
+    // Create Delete Button
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "delete-button";
+    deleteButton.textContent = "🗑️"; // Delete icon
+    deleteButton.onclick = function () {
+      showDeleteModal(cells); // Show delete modal for the row
+    };
+
+    actionsCell.appendChild(editButton); // Append edit button
+    actionsCell.appendChild(deleteButton); // Append delete button
+  }
 });

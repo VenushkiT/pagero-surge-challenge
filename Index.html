@@ -136,7 +136,15 @@
         <p class="confirmation" id="deleteConfirmation" style="display: none"></p>
       </div>
     </div>
-
+    <!-- Edit Confirmation Modal -->
+    <div id="editConfirmationModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button-edit" onclick="closeEditModal()">&times;</span>
+        <p>Do you want to save the changes?</p>
+        <button id="confirmEdit">Yes</button>
+        <button id="cancelEdit">No</button>
+      </div>
+    </div>
     <div id="confirmationModal" class="modal">
       <div class="modal-content">
         <span class="close-button" id="closeModal">&times;</span>
