@@ -5,18 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     sidebar.classList.toggle("open");
   });
 
-  // Define the showSection function
-  window.showSection = function (sectionId) {
-    const sections = document.querySelectorAll("section");
-    sections.forEach((section) => {
-      section.style.display = "none";
-    });
-    const targetSection = document.getElementById(sectionId);
-    if (targetSection) {
-      targetSection.style.display = "block";
-    }
-  };
-
   // Helper Functions
   function showError(element, message) {
     const errorElement = element.nextElementSibling;
@@ -128,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "none";
   }
 
+  // Close modal when clicking the close button
   document.querySelector(".close-button").addEventListener("click", closeModal);
   window.addEventListener("click", function (event) {
     const modal = document.getElementById("confirmationModal");
@@ -252,8 +241,14 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("load", resetForm);
 
   // Section Switching
-  function showSection(sectionId) {
-    document.getElementById("main-content").style.display = "none";
-    document.getElementById("details-section").style.display = "block";
-  }
+  window.showSection = function (sectionId) {
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => {
+      section.style.display = "none";
+    });
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      targetSection.style.display = "block";
+    }
+  };
 });
