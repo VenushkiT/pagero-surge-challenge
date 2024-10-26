@@ -22,6 +22,29 @@ document.addEventListener("DOMContentLoaded", function () {
     element.classList.add("valid-border");
   }
 
+  // Function to create Edit and Delete buttons
+  function createActionButtons(row) {
+    const actionsCell = row.cells[row.cells.length - 1];
+    actionsCell.innerHTML = ""; // Clear existing content
+
+    const editButton = document.createElement("button");
+    editButton.className = "edit-button";
+    editButton.textContent = "✏️";
+    editButton.onclick = function () {
+      editRow(row);
+    };
+
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "delete-button";
+    deleteButton.textContent = "🗑️";
+    deleteButton.onclick = function () {
+      showDeleteModal(row);
+    };
+
+    actionsCell.appendChild(editButton);
+    actionsCell.appendChild(deleteButton);
+  }
+
   // Validation Functions
   function validateField(input) {
     const id = input.id;
@@ -125,19 +148,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Modal for Deleting Confirmation
+  // Delete Confirmation Modal
   const deleteModal = document.getElementById("deleteModal");
   const confirmDeleteButton = document.getElementById("confirmDelete");
   const cancelDeleteButton = document.getElementById("cancelDelete");
   let currentRow;
 
-  // Function to show the delete confirmation modal
   function showDeleteModal(row) {
     currentRow = row;
     deleteModal.style.display = "block";
   }
 
-  // Confirm delete action
   confirmDeleteButton.onclick = function () {
     if (currentRow) {
       const tableBody = document.getElementById("employeeTable").querySelector("tbody");
@@ -147,17 +168,14 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteModal.style.display = "none";
   };
 
-  // Cancel delete action
   cancelDeleteButton.onclick = function () {
     deleteModal.style.display = "none";
   };
 
-  // Close modal when clicking the close button
   document.getElementById("closeDeleteModal").onclick = function () {
     deleteModal.style.display = "none";
   };
 
-  // Close modal when clicking outside the modal
   window.onclick = function (event) {
     if (event.target === deleteModal) {
       deleteModal.style.display = "none";
@@ -176,14 +194,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Prevent form submission if there are validation errors
     if (!allValid) {
       event.preventDefault();
     } else {
       event.preventDefault();
       showModal("Form successfully validated!");
 
-      // Collect form data
       const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
       const email = document.getElementById("email").value;
@@ -192,7 +208,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const department = document.getElementById("department").value;
       const startDate = document.getElementById("start_date").value;
 
-      // Insert data into the table
       const table = document.getElementById("employeeTable").querySelector("tbody");
       const newRow = table.insertRow();
       newRow.insertCell(0).innerText = name;
@@ -202,33 +217,15 @@ document.addEventListener("DOMContentLoaded", function () {
       newRow.insertCell(4).innerText = position;
       newRow.insertCell(5).innerText = department;
       newRow.insertCell(6).innerText = startDate;
-      const actionsCell = newRow.insertCell(7);
+      newRow.insertCell(7);
 
-      // Create Edit Button
-      const editButton = document.createElement("button");
-      editButton.className = "edit-button";
-      editButton.textContent = "✏️";
-      editButton.onclick = function () {
-        editRow(newRow);
-      };
-      actionsCell.appendChild(editButton);
+      // Call createActionButtons for the new row
+      createActionButtons(newRow);
 
-      // Create Delete Button
-      const deleteButton = document.createElement("button");
-      deleteButton.className = "delete-button";
-      deleteButton.textContent = "🗑️";
-      deleteButton.onclick = function () {
-        showDeleteModal(newRow);
-      };
-      actionsCell.appendChild(deleteButton);
-
-      // Show the details section
       showSection("details-section");
 
-      // Optionally reset form after submission
       form.reset();
 
-      // Show confirmation modal
       showModal("Form submitted successfully!");
     }
   });
@@ -262,15 +259,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("confirmEdit").onclick = function () {
       editModal.style.display = "none";
-      callback(true); // Proceed with saving changes
+      callback(true);
     };
 
     document.getElementById("cancelEdit").onclick = function () {
       editModal.style.display = "none";
-      callback(false); // Cancel the save action
+      callback(false);
     };
     document.getElementById("closeEditModal").onclick = function () {
-      deleteModal.style.display = "none";
+      editModal.style.display = "none";
     };
   }
 
@@ -278,65 +275,35 @@ document.addEventListener("DOMContentLoaded", function () {
     const cells = row.cells;
     const originalData = Array.from(cells).map((cell) => cell.innerText);
 
-    // Replace cells with input fields
     for (let i = 0; i < cells.length - 1; i++) {
       const input = document.createElement("input");
       input.type = "text";
       input.value = originalData[i];
-      cells[i].innerHTML = ""; // Clear the cell
-      cells[i].appendChild(input); // Append the input field
+      cells[i].innerHTML = "";
+      cells[i].appendChild(input);
     }
 
     const saveButton = document.createElement("button");
-    saveButton.textContent = "Save";
+    saveButton.textContent = "💾";
     saveButton.className = "save-button";
-    saveButton.onclick = () => {
-      showEditConfirmationModal((confirmSave) => {
-        if (confirmSave) {
-          // Save changes to cells
+    saveButton.onclick = function () {
+      showEditConfirmationModal(function (confirmed) {
+        if (confirmed) {
           for (let i = 0; i < cells.length - 1; i++) {
-            cells[i].innerText = cells[i].querySelector("input").value; // Update cell values
+            cells[i].innerText = cells[i].querySelector("input").value;
           }
-          showModal("Saved successfully.");
-          resetActionButtons(cells); // Reset action buttons after saving
+          createActionButtons(row);
         } else {
-          // Revert changes if not saving
           for (let i = 0; i < cells.length - 1; i++) {
-            cells[i].innerText = originalData[i]; // Restore original data
+            cells[i].innerText = originalData[i];
           }
-          resetActionButtons(cells); // Reset action buttons
+          createActionButtons(row);
         }
       });
     };
 
-    // Clear previous action buttons and append save button
     const actionsCell = cells[cells.length - 1];
-    actionsCell.innerHTML = ""; // Clear actions cell
-    actionsCell.appendChild(saveButton); // Append save button
-  }
-
-  // Reset action buttons to original state
-  function resetActionButtons(cells) {
-    const actionsCell = cells[cells.length - 1];
-    actionsCell.innerHTML = ""; // Clear actions cell
-
-    // Create Edit Button
-    const editButton = document.createElement("button");
-    editButton.className = "edit-button";
-    editButton.textContent = "✏️"; // Edit icon
-    editButton.onclick = function () {
-      editRow(cells); // Reopen edit row function
-    };
-
-    // Create Delete Button
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "delete-button";
-    deleteButton.textContent = "🗑️"; // Delete icon
-    deleteButton.onclick = function () {
-      showDeleteModal(cells); // Show delete modal for the row
-    };
-
-    actionsCell.appendChild(editButton); // Append edit button
-    actionsCell.appendChild(deleteButton); // Append delete button
+    actionsCell.innerHTML = "";
+    actionsCell.appendChild(saveButton);
   }
 });
